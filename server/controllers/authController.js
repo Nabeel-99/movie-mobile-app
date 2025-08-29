@@ -36,12 +36,28 @@ export const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
-    return res.status(200).json({ message: "Login successful", token });
+    return res.status(200).json({ message: "Login successful", token, user });
   } catch (error) {
     console.log("error", error);
     return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const { userId } = req;
+    console.log("userId", userId);
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    console.log("user", user);
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(500), json({ message: "Something went wrong" });
   }
 };

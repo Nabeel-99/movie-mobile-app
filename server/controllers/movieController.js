@@ -2,6 +2,7 @@ import Movie from "../models/movie.js";
 
 export const saveMovie = async (req, res) => {
   try {
+    const { userId } = req;
     const { data } = req.body;
     const foundMovie = await Movie.findOne({ title: data.title });
     if (foundMovie) {
@@ -9,6 +10,7 @@ export const saveMovie = async (req, res) => {
     }
     const newMovie = await Movie.create({
       ...data,
+      userId,
       genres: data.genres.map((g) => g.name),
       production_companies: data.production_companies.map((p) => p.name),
       production_countries: data.production_countries.map((c) => c.name),
@@ -21,9 +23,10 @@ export const saveMovie = async (req, res) => {
   }
 };
 
-export const getAllMovies = async (req, res) => {
+export const getUserMovies = async (req, res) => {
   try {
-    const movies = await Movie.find({});
+    const { userId } = req;
+    const movies = await Movie.find({ userId });
     if (!movies) {
       return res.status(404).json({ message: "No movies found" });
     }

@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    savedMovies: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Movie",
+      required: false,
+    },
   },
   { timestamps: true }
 );

@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     id: {
       type: Number,
       required: true,
