@@ -2,9 +2,15 @@ import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
 import "../global.css";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Provider as PaperProvider } from "react-native-paper";
+import {
+  Provider as PaperProvider,
+  Portal,
+  Snackbar,
+} from "react-native-paper";
 import { AuthProvider } from "@/components/AuthContext";
+import { useNetwork } from "@/services/useNetwork";
 export default function RootLayout() {
+  const { isConnected, setIsConnected } = useNetwork();
   return (
     <>
       <AuthProvider>
@@ -36,6 +42,21 @@ export default function RootLayout() {
                 }}
               />
             </Stack>
+            {!isConnected && (
+              <Portal>
+                <Snackbar
+                  visible={!isConnected}
+                  onDismiss={() => setIsConnected(true)}
+                  action={{
+                    label: "Retry",
+                    onPress: () => setIsConnected(true),
+                  }}
+                  style={{ marginBottom: 50, marginHorizontal: 20 }}
+                >
+                  No internet connection
+                </Snackbar>
+              </Portal>
+            )}
           </SafeAreaProvider>
         </PaperProvider>
       </AuthProvider>

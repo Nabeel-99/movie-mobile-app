@@ -1,11 +1,12 @@
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TextInput } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+
 import { Link, useRouter } from "expo-router";
 import axios from "axios";
 import { BACKEND_URL } from "@/constants/utils";
 import { Portal, Snackbar } from "react-native-paper";
+import GoogleSignInBtn from "../GoogleSignInBtn";
 
 const SignupCard = () => {
   const router = useRouter();
@@ -121,12 +122,7 @@ const SignupCard = () => {
         <View className="w-full flex-1 h-[1px] bg-white"></View>
       </View>
 
-      <View className="flex-row items-center  gap-2 justify-center w-ful">
-        <TouchableOpacity className="bg-dark-200 w-full justify-center p-4 rounded-lg flex-row gap-2 items-center">
-          <Ionicons name="logo-google" size={20} color="white" />
-          <Text className="text-white">Google</Text>
-        </TouchableOpacity>
-      </View>
+      <GoogleSignInBtn />
 
       <Portal>
         <Snackbar

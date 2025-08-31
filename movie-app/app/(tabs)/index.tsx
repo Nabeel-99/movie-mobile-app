@@ -3,11 +3,10 @@ import SearchBar from "@/components/SearchBar";
 import TrendingMovies from "@/components/TrendingMovies";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
-
 import { fetchMovies, fetchTrendingMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
-
+import Constants from "expo-constants";
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 export default function Index() {
   const router = useRouter();

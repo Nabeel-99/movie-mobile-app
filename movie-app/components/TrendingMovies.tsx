@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, Text } from "react-native";
-import TrendingCard from "./TrendingCard";
+import TrendingCard from "./cards/TrendingCard";
 
 const TrendingMovies = ({ trendingMovies }: { trendingMovies: Movie[] }) => {
   return (

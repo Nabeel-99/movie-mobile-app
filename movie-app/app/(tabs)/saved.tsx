@@ -1,5 +1,5 @@
 import { useAuth } from "@/components/AuthContext";
-import MovieCard from "@/components/MovieCard";
+import MovieCard from "@/components/cards/MovieCard";
 import { BACKEND_URL } from "@/constants/utils";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -25,7 +25,7 @@ const saved = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("res", res.data);
+
       setData(res.data);
     } catch (error) {
       console.log("error", error);

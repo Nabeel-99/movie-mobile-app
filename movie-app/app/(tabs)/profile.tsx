@@ -1,17 +1,10 @@
 import { useAuth } from "@/components/AuthContext";
-import ProfileCard from "@/components/ProfileCard";
-import SignupCard from "@/components/SignupCard";
+import ProfileCard from "@/components/cards/ProfileCard";
+import SignupCard from "@/components/cards/SignupCard";
 import { icons } from "@/constants/icons";
-import { getToken } from "@/constants/utils";
-import React, { useEffect } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import {
-  ActivityIndicator,
-  Avatar,
-  Divider,
-  List,
-  Switch,
-} from "react-native-paper";
+import React from "react";
+import { Image, ScrollView, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 const profile = () => {
   const { user, loading, signOut } = useAuth();

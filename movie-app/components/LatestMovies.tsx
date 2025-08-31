@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, Text } from "react-native";
-import MovieCard from "./MovieCard";
+import MovieCard from "./cards/MovieCard";
 
 const LatestMovies = ({ movies }: { movies: Movie[] }) => {
   return (

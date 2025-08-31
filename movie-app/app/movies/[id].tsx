@@ -1,17 +1,9 @@
 import MovieContent from "@/components/MovieContent";
 import { fetchMovieDetails } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import {
-  Button,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, View } from "react-native";
 import axios from "axios";
 import { BACKEND_URL } from "@/constants/utils";
 import { Portal, Snackbar } from "react-native-paper";

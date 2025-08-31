@@ -1,7 +1,7 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import React from "react";
 import { icons } from "@/constants/icons";
-import SigninCard from "@/components/SigninCard";
+import SigninCard from "@/components/cards/SigninCard";
 
 const signin = () => {
   return (

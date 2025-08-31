@@ -49,12 +49,12 @@ export const loginUser = async (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const { userId } = req;
-    console.log("userId", userId);
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("user", user);
+
     return res.status(200).json({ user });
   } catch (error) {
     console.log("error", error);

@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>movieapp</string>
-          <string>com.anonymous.movie-app</string>
+          <string>com.anonymous.movie_app</string>
         </array>
       </dict>
     </array>
