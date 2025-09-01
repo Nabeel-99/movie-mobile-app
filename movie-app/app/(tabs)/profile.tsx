@@ -5,12 +5,17 @@ import { icons } from "@/constants/icons";
 import React from "react";
 import { Image, ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { useTheme } from "@/components/ThemeContext";
 
 const profile = () => {
   const { user, loading, signOut } = useAuth();
+  const { theme } = useTheme();
 
   return (
-    <View className="bg-primary flex-1 justify-center    h-full ">
+    <View
+      style={{ backgroundColor: theme.colors.background }}
+      className="flex-1 justify-center h-full"
+    >
       <ScrollView
         contentContainerStyle={{
           flex: 1,

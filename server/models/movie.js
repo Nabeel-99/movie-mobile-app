@@ -75,6 +75,11 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isSaved: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );

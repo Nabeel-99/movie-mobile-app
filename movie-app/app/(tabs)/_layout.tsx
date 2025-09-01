@@ -1,14 +1,18 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import React from "react";
+import { useTheme } from "@/components/ThemeContext";
+import { Text, TouchableOpacity } from "react-native";
+
 const _layout = () => {
+  const { theme } = useTheme();
   return (
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: "#0f0d23",
-          borderColor: "#000000",
+          backgroundColor: theme.colors.surface,
+          borderColor: theme.colors.outline,
           position: "absolute",
           overflow: "hidden",
         },
@@ -29,12 +33,29 @@ const _layout = () => {
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
-              color={"#a8b5db"}
+              color={theme.colors.onSurface}
               size={size}
             />
           ),
         }}
       />
+      {/* <Tabs.Screen
+        name="index"
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: theme.colors.surface },
+          headerTintColor: theme.colors.onSurface,
+          title: "Edit Profile",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              color={theme.colors.onSurface}
+              size={size}
+            />
+          ),
+        }}
+      /> */}
+   
 
       <Tabs.Screen
         name="search"
@@ -44,7 +65,7 @@ const _layout = () => {
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "search" : "search-outline"}
-              color={"#a8b5db"}
+              color={theme.colors.onSurface}
               size={size}
             />
           ),
@@ -58,22 +79,31 @@ const _layout = () => {
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "bookmark" : "bookmark-outline"}
-              color={"#a8b5db"}
+              color={theme.colors.onSurface}
               size={size}
             />
           ),
         }}
       />
-
-      <Tabs.Screen
+         <Tabs.Screen
         name="profile"
         options={{
-          headerShown: false,
-          title: "Profile",
+          headerRight: () => (
+            <TouchableOpacity onPress={() => router.push("/editprofile")}>
+              <Text
+                style={{ color: theme.colors.onSurface }}
+                className="text-xl mr-10"
+              >
+                Edit
+              </Text>
+            </TouchableOpacity>
+          ),
+          headerTitle: "",
+          headerStyle: { backgroundColor: theme.colors.background },
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
-              color={"#a8b5db"}
+              color={theme.colors.onSurface}
               size={size}
             />
           ),

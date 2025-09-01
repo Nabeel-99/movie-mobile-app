@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log("user data", res.data);
+
           setUser(res.data.user);
         }
       } catch (error) {

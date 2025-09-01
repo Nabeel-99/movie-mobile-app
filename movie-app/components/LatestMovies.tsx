@@ -1,11 +1,18 @@
 import React from "react";
 import { FlatList, Text } from "react-native";
 import MovieCard from "./cards/MovieCard";
+import { useTheme } from "@/components/ThemeContext";
 
 const LatestMovies = ({ movies }: { movies: Movie[] }) => {
+  const { theme } = useTheme();
   return (
     <>
-      <Text className="text-lg font-bold text-white">Latest movies</Text>
+      <Text
+        style={{ color: theme.colors.onBackground }}
+        className="text-lg font-bold"
+      >
+        Latest movies
+      </Text>
       <FlatList
         data={movies}
         keyExtractor={(item) => item.id.toString()}

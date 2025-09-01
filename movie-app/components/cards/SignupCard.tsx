@@ -7,9 +7,11 @@ import axios from "axios";
 import { BACKEND_URL } from "@/constants/utils";
 import { Portal, Snackbar } from "react-native-paper";
 import GoogleSignInBtn from "../GoogleSignInBtn";
+import { useTheme } from "@/components/ThemeContext";
 
 const SignupCard = () => {
   const router = useRouter();
+  const { theme } = useTheme();
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
     firstname: "",
@@ -65,7 +67,8 @@ const SignupCard = () => {
     <View className="bg-primary flex-1 mt-10  gap-6 p-4 px-6 rounded-lg">
       <TextInput
         placeholderTextColor={"white"}
-        className="text-white border p-4 rounded-lg border-dark-100"
+        style={{ color: theme.colors.onSurface }}
+        className="border p-4 rounded-lg border-dark-100"
         placeholder="First name"
         value={userData.firstname}
         autoCorrect={false}
@@ -73,7 +76,8 @@ const SignupCard = () => {
       />
       <TextInput
         placeholderTextColor={"white"}
-        className="text-white border p-4 rounded-lg border-dark-100"
+        style={{ color: theme.colors.onSurface }}
+        className="border p-4 rounded-lg border-dark-100"
         placeholder="Last name"
         value={userData.lastname}
         autoCorrect={false}
@@ -81,7 +85,8 @@ const SignupCard = () => {
       />
       <TextInput
         placeholderTextColor={"white"}
-        className="text-white border p-4 rounded-lg border-dark-100"
+        style={{ color: theme.colors.onSurface }}
+        className="border p-4 rounded-lg border-dark-100"
         placeholder="Email"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -91,7 +96,8 @@ const SignupCard = () => {
       />
       <TextInput
         placeholderTextColor={"white"}
-        className="text-white border p-4 rounded-lg border-dark-100"
+        style={{ color: theme.colors.onSurface }}
+        className="border p-4 rounded-lg border-dark-100"
         placeholder="Password"
         secureTextEntry={true}
         autoCorrect={false}
@@ -106,19 +112,25 @@ const SignupCard = () => {
         {loading ? (
           <ActivityIndicator size="small" color="white" />
         ) : (
-          <Text className="text-white text-xl">Sign up</Text>
+          <Text style={{ color: theme.colors.onPrimary }} className="text-xl">
+            Sign up
+          </Text>
         )}
       </TouchableOpacity>
 
       <View className="flex-row items-center mt-10   gap-2 justify-center w-ful">
-        <Text className="text-white text-xl">Already have an account?</Text>
+        <Text style={{ color: theme.colors.onBackground }} className="text-xl">
+          Already have an account?
+        </Text>
         <Link href={"/signin"} className="text-accent text-xl">
           Login
         </Link>
       </View>
       <View className="flex-row items-center gap-1 mt-8">
         <View className="w-full flex-1 h-[1px] bg-white"></View>
-        <Text className="text-white ">Or continue with</Text>
+        <Text style={{ color: theme.colors.onBackground }}>
+          Or continue with
+        </Text>
         <View className="w-full flex-1 h-[1px] bg-white"></View>
       </View>
 

@@ -10,7 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.movie_app"
+      "bundleIdentifier": "com.anonymous.movie_app",
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"],
+        "NSLocalNotificationUsageDescription": "This app will send you reminders for saved movies."
+      }
     },
     "android": {
       "adaptiveIcon": {

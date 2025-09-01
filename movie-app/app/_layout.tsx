@@ -1,22 +1,31 @@
 import { Stack } from "expo-router";
-import { StatusBar } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import "../global.css";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
   Provider as PaperProvider,
   Portal,
   Snackbar,
+  MD3LightTheme as DefaultTheme,
 } from "react-native-paper";
 import { AuthProvider } from "@/components/AuthContext";
-import { useNetwork } from "@/services/useNetwork";
-export default function RootLayout() {
+import { ThemeProvider, useTheme } from "@/components/ThemeContext";
+import { useNetwork } from "@/hooks/useNetwork";
+
+
+function AppContent() {
   const { isConnected, setIsConnected } = useNetwork();
+  const { theme } = useTheme();
   return (
-    <>
+    
+  
       <AuthProvider>
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           <SafeAreaProvider>
-            <StatusBar barStyle={"light-content"} />
+            <StatusBar
+              barStyle={theme.dark ? "light-content" : "dark-content"}
+              backgroundColor={theme.colors.background}
+            />
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen
@@ -25,8 +34,8 @@ export default function RootLayout() {
                   const params = route.params as { title?: string };
                   return {
                     headerBackTitle: "Back",
-                    headerStyle: { backgroundColor: "#0f0d23" },
-                    headerTintColor: "#a8b5db",
+                    headerStyle: { backgroundColor: theme.colors.surface },
+                    headerTintColor: theme.colors.onSurface,
                     headerTitle: params?.title || "Movie Details",
                   };
                 }}
@@ -36,9 +45,27 @@ export default function RootLayout() {
                 name="(auth)/signin"
                 options={{
                   headerBackTitle: "Back",
-                  headerStyle: { backgroundColor: "#0f0d23" },
-                  headerTintColor: "#a8b5db",
+                  headerStyle: { backgroundColor: theme.colors.surface },
+                  headerTintColor: theme.colors.onSurface,
                   headerTitle: "Sign In",
+                }}
+              />
+              <Stack.Screen
+                name="appearance"
+                options={{
+                  headerBackTitle: "Back",
+                  headerStyle: { backgroundColor: theme.colors.surface },
+                  headerTintColor: theme.colors.onSurface,
+                  headerTitle: "Display",
+                }}
+              />
+              <Stack.Screen
+                name="editprofile"
+                options={{
+                  headerBackTitle: "Profile",
+                  headerStyle: { backgroundColor: theme.colors.surface },
+                  headerTintColor: theme.colors.onSurface,
+                  headerTitle: "Edit Profile",
                 }}
               />
             </Stack>
@@ -46,7 +73,8 @@ export default function RootLayout() {
               <Portal>
                 <Snackbar
                   visible={!isConnected}
-                  onDismiss={() => setIsConnected(true)}
+                  onDismiss={() => setIsConnected(true
+  )}
                   action={{
                     label: "Retry",
                     onPress: () => setIsConnected(true),
@@ -60,6 +88,14 @@ export default function RootLayout() {
           </SafeAreaProvider>
         </PaperProvider>
       </AuthProvider>
-    </>
+    
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

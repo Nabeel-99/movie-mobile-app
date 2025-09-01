@@ -4,10 +4,17 @@ import TrendingMovies from "@/components/TrendingMovies";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies, fetchTrendingMovies } from "@/services/api";
-import useFetch from "@/services/useFetch";
+import useFetch from "@/hooks/useFetch";
 import { useRouter } from "expo-router";
-import Constants from "expo-constants";
-import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
+import { useTheme } from "@/components/ThemeContext";
+
 export default function Index() {
   const router = useRouter();
   const {
@@ -20,9 +27,12 @@ export default function Index() {
     loading: trendingMoviesLoading,
     error: trendingMoviesError,
   } = useFetch(fetchTrendingMovies);
-
+  const { theme } = useTheme();
   return (
-    <View className="flex-1  bg-primary text-white  w-full ">
+    <View
+      style={{ backgroundColor: theme.colors.background }}
+      className="flex-1 w-full"
+    >
       <Image source={images.bg} className="absolute w-full z-0" />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -52,5 +62,6 @@ export default function Index() {
         )}
       </ScrollView>
     </View>
+ 
   );
 }

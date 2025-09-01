@@ -4,12 +4,14 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 
-import useFetch from "@/services/useFetch";
+import useFetch from "@/hooks/useFetch";
 
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
+import { useTheme } from "@/components/ThemeContext";
 const search = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { theme } = useTheme();
   const [debouncedInput, setDebouncedInput] = useState("");
   const {
     data: movies,
@@ -36,7 +38,10 @@ const search = () => {
     renderMovies();
   }, [debouncedInput]);
   return (
-    <View className="flex-1 bg-primary w-full">
+    <View
+      style={{ backgroundColor: theme.colors.background }}
+      className="flex-1 w-full"
+    >
       <Image source={images.bg} className="absolute w-full z-0" />
       <FlatList
         data={movies}
@@ -76,9 +81,14 @@ const search = () => {
               !moviesError &&
               searchQuery.trim() &&
               movies?.length > 0 && (
-                <Text className="text-white text-2xl font-bold mt-5">
+                <Text
+                  style={{ color: theme.colors.onBackground }}
+                  className="text-2xl font-bold mt-5"
+                >
                   Search Results for{" "}
-                  <Text className="text-accent">{searchQuery}</Text>
+                  <Text style={{ color: theme.colors.primary }}>
+                    {searchQuery}
+                  </Text>
                 </Text>
               )}
           </>
@@ -86,7 +96,10 @@ const search = () => {
         ListEmptyComponent={
           !moviesLoading && !moviesError ? (
             <View>
-              <Text className="text-white text-center mt-20 ">
+              <Text
+                style={{ color: theme.colors.onBackground }}
+                className="text-center mt-20"
+              >
                 {searchQuery.trim() && "No movies found"}
               </Text>
             </View>

@@ -4,9 +4,11 @@ import { TouchableOpacity } from "react-native";
 import { Portal, Snackbar } from "react-native-paper";
 import { useAuth } from "../AuthContext";
 import GoogleSignInBtn from "../GoogleSignInBtn";
+import { useTheme } from "@/components/ThemeContext";
 
 const SigninCard = () => {
   const { signIn, loading } = useAuth();
+  const { theme } = useTheme();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -36,7 +38,8 @@ const SigninCard = () => {
     <View className="bg-primary flex-1 mt-10  gap-6 p-4 px-6 rounded-lg">
       <TextInput
         placeholderTextColor={"white"}
-        className="text-white border p-4 rounded-lg border-dark-100"
+        style={{ color: theme.colors.onSurface }}
+        className="border p-4 rounded-lg border-dark-100"
         placeholder="Email"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -46,7 +49,8 @@ const SigninCard = () => {
       />
       <TextInput
         placeholderTextColor={"white"}
-        className="text-white border p-4 rounded-lg border-dark-100"
+        style={{ color: theme.colors.onSurface }}
+        className="border p-4 rounded-lg border-dark-100"
         placeholder="Password"
         secureTextEntry={true}
         autoCorrect={false}
@@ -61,13 +65,17 @@ const SigninCard = () => {
         {loading ? (
           <ActivityIndicator size="small" color="white" />
         ) : (
-          <Text className="text-white text-xl">Sign in</Text>
+          <Text style={{ color: theme.colors.onPrimary }} className="text-xl">
+            Sign in
+          </Text>
         )}
       </TouchableOpacity>
 
       <View className="flex-row items-center gap-1 mt-8">
         <View className="w-full flex-1 h-[1px] bg-white"></View>
-        <Text className="text-white ">Or continue with</Text>
+        <Text style={{ color: theme.colors.onBackground }}>
+          Or continue with
+        </Text>
         <View className="w-full flex-1 h-[1px] bg-white"></View>
       </View>
       <GoogleSignInBtn />

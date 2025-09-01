@@ -11,10 +11,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@/components/ThemeContext";
 
 const saved = () => {
   const [data, setData] = useState<Movie[]>([]);
   const { token } = useAuth();
+  const { theme } = useTheme();
 
   const [fetching, setFetching] = useState(false);
   const fetchSavedMovies = async () => {
@@ -38,9 +40,20 @@ const saved = () => {
     fetchSavedMovies();
   }, []);
   return (
-    <SafeAreaView className="bg-primary flex-1">
-      <View className="bg-primary flex-1 gap-8 mt-8 px-5">
-        <Text className="text-white text-3xl font-bold">Saved Movies</Text>
+    <SafeAreaView
+      style={{ backgroundColor: theme.colors.background }}
+      className="flex-1"
+    >
+      <View
+        style={{ backgroundColor: theme.colors.background }}
+        className="flex-1 gap-8 mt-8 px-5"
+      >
+        <Text
+          style={{ color: theme.colors.onBackground }}
+          className="text-3xl font-bold"
+        >
+          Saved Movies
+        </Text>
         {fetching ? (
           <ActivityIndicator size={"large"} color={"0000ff"} />
         ) : (
@@ -59,7 +72,10 @@ const saved = () => {
             }}
             ListEmptyComponent={() => (
               <View className="flex-1 items-center justify-center">
-                <Text className="text-white text-lg font-bold">
+                <Text
+                  style={{ color: theme.colors.onBackground }}
+                  className="text-lg font-bold"
+                >
                   No saved movies
                 </Text>
               </View>

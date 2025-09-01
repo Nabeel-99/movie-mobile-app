@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as WebBroswer from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import Constants from "expo-constants";
+import { useTheme } from "@/components/ThemeContext";
 
 type ExpoExtra = {
   webGoogleClientId: string;
@@ -13,6 +14,7 @@ type ExpoExtra = {
 
 WebBroswer.maybeCompleteAuthSession();
 const GoogleSignIn = () => {
+  const { theme } = useTheme();
   const { webGoogleClientId, iosGoogleClientId } = Constants.expoConfig
     ?.extra as ExpoExtra;
 
@@ -23,7 +25,6 @@ const GoogleSignIn = () => {
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
-      console.log("auth", authentication);
     }
   }, [response]);
   return (
@@ -34,7 +35,7 @@ const GoogleSignIn = () => {
         className="bg-dark-200 w-full justify-center p-4 rounded-lg flex-row gap-2 items-center"
       >
         <Ionicons name="logo-google" size={20} color="white" />
-        <Text className="text-white">Google</Text>
+        <Text style={{ color: theme.colors.onSurface }}>Google</Text>
       </TouchableOpacity>
     </View>
   );

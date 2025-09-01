@@ -11,6 +11,7 @@ export const saveMovie = async (req, res) => {
     const newMovie = await Movie.create({
       ...data,
       userId,
+      isSaved: true,
       genres: data.genres.map((g) => g.name),
       production_companies: data.production_companies.map((p) => p.name),
       production_countries: data.production_countries.map((c) => c.name),

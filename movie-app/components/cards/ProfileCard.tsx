@@ -1,8 +1,11 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Divider, List, Switch } from "react-native-paper";
 import { useRouter } from "expo-router";
-
+import { registerPushNotifications } from "@/services/notifications";
+import * as Notifications from "expo-notifications";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTheme } from "../ThemeContext";
 const ProfileCard = ({
   user,
   signOut,
@@ -12,6 +15,32 @@ const ProfileCard = ({
 }) => {
   const router = useRouter();
   const [enabled, setEnabled] = useState(false);
+  const { theme } = useTheme();
+  useEffect(() => {
+    const loadPushNotificationsBool = async () => {
+      try {
+        const saved = await AsyncStorage.getItem("pushNotifications");
+        if (saved) {
+          setEnabled(JSON.parse(saved));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadPushNotificationsBool();
+  }, []);
+  const valueChange = async () => {
+    try {
+      const newValue = !enabled;
+      setEnabled(newValue);
+      if (newValue) {
+        await registerPushNotifications();
+      }
+      await AsyncStorage.setItem("pushNotifications", JSON.stringify(newValue));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View className="flex-1 items-center justify-between gap-6 h-full w-full px-4">
       <View className="flex-1 items-center w-full gap-6">
@@ -21,22 +50,32 @@ const ProfileCard = ({
           style={{ backgroundColor: "#AB8BFF" }}
           color="white"
         />
-        <Text className="text-white text-2xl font-bold">
+        <Text
+          style={{ color: theme.colors.onBackground }}
+          className="text-2xl font-bold"
+        >
           {user?.firstname} {user?.lastname}
         </Text>
         <View className="flex-1 w-full">
-          <List.Section className="bg-dark-200 text-white w-full rounded-lg">
+          <List.Section
+            style={{ backgroundColor: theme.colors.surface }}
+            className="w-full rounded-lg"
+          >
             <List.Item
               title="Notifications"
-              titleStyle={{ color: "#fff" }}
-              className="text-white"
+              titleStyle={{ color: theme.colors.onSurface }}
+              className=""
               left={(props) => (
-                <List.Icon {...props} icon={"bell"} color="white" />
+                <List.Icon
+                  {...props}
+                  icon={"bell"}
+                  color={theme.colors.onSurface}
+                />
               )}
               right={() => (
                 <Switch
                   value={enabled}
-                  onValueChange={() => setEnabled((prev) => !prev)}
+                  onValueChange={valueChange}
                   color={"#AB8BFF"}
                 />
               )}
@@ -44,22 +83,35 @@ const ProfileCard = ({
             <Divider className="ml-16" />
             <List.Item
               title="Appearance"
-              titleStyle={{ color: "#fff" }}
-              className="text-white"
+              titleStyle={{ color: theme.colors.onSurface }}
+              className=""
               left={(props) => (
-                <List.Icon {...props} icon={"palette"} color="white" />
+                <List.Icon
+                  {...props}
+                  icon={"palette"}
+                  color={theme.colors.onSurface}
+                />
               )}
               right={(props) => (
-                <List.Icon {...props} icon={"chevron-right"} color="white" />
+                <List.Icon
+                  {...props}
+                  icon={"chevron-right"}
+                  color={theme.colors.onSurface}
+                />
               )}
+              onPress={() => router.push("/appearance")}
             />
             <Divider className="ml-16" />
             <List.Item
               title="Saved Movies"
-              titleStyle={{ color: "#fff" }}
-              className="text-white"
+              titleStyle={{ color: theme.colors.onSurface }}
+              className=""
               left={(props) => (
-                <List.Icon {...props} icon={"bookmark"} color="white" />
+                <List.Icon
+                  {...props}
+                  icon={"bookmark"}
+                  color={theme.colors.onSurface}
+                />
               )}
               onPress={() => router.push("/saved")}
             />
@@ -70,7 +122,7 @@ const ProfileCard = ({
         onPress={signOut}
         className="bg-accent p-4 rounded-lg w-full"
       >
-        <Text className="text-white text-xl text-center">Sign out</Text>
+        <Text className="text-xl text-white text-center">Sign out</Text>
       </TouchableOpacity>
     </View>
   );
