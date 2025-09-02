@@ -2,6 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
 import { MD3LightTheme, MD3DarkTheme } from "react-native-paper";
 import Constant from "expo-constants";
+import * as ImagePicker from "expo-image-picker";
+import { Alert } from "react-native";
+
 const { expoConfig } = Constant;
 const localIP = (expoConfig?.hostUri || "").split(":").shift() || "localhost";
 // backend url
@@ -98,4 +101,14 @@ export const saveLastManualTheme = async (theme: "light" | "dark") => {
 export const getLastManualTheme = async (): Promise<"light" | "dark"> => {
   const value = await AsyncStorage.getItem(LAST_MANUAL_THEME_KEY);
   return (value as any) || "dark";
+};
+
+export const requestImagePickerPermission = async () => {
+  (async () => {
+    const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+    const mediaStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (cameraStatus.status !== "granted" || mediaStatus.status !== "granted") {
+      Alert.alert("Permission required", "Camera and gallery access needed");
+    }
+  })();
 };

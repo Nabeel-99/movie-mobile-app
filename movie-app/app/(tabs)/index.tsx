@@ -6,13 +6,7 @@ import { images } from "@/constants/images";
 import { fetchMovies, fetchTrendingMovies } from "@/services/api";
 import useFetch from "@/hooks/useFetch";
 import { useRouter } from "expo-router";
-import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
 
 export default function Index() {
@@ -28,6 +22,7 @@ export default function Index() {
     error: trendingMoviesError,
   } = useFetch(fetchTrendingMovies);
   const { theme } = useTheme();
+
   return (
     <View
       style={{ backgroundColor: theme.colors.background }}
@@ -62,6 +57,5 @@ export default function Index() {
         )}
       </ScrollView>
     </View>
- 
   );
 }

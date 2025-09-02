@@ -14,6 +14,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+  const fetchUser = async (token: string) => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/auth`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        setUser(res.data.user);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   useEffect(() => {
     const loadToken = async () => {
@@ -21,13 +35,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const token = await getToken();
         if (token) {
           setToken(token);
-          const res = await axios.get(`${BACKEND_URL}/api/auth`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          setUser(res.data.user);
+          await fetchUser(token);
         }
       } catch (error) {
         console.log("error", error);
@@ -70,7 +78,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ user, token, signIn, signOut, loading }}>
+    <AuthContext.Provider
+      value={{ user, token, signIn, signOut, loading, fetchUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

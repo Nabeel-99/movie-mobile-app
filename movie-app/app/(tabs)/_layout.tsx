@@ -39,23 +39,6 @@ const _layout = () => {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          headerShown: true,
-          headerStyle: { backgroundColor: theme.colors.surface },
-          headerTintColor: theme.colors.onSurface,
-          title: "Edit Profile",
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? "home" : "home-outline"}
-              color={theme.colors.onSurface}
-              size={size}
-            />
-          ),
-        }}
-      /> */}
-   
 
       <Tabs.Screen
         name="search"
@@ -85,7 +68,7 @@ const _layout = () => {
           ),
         }}
       />
-         <Tabs.Screen
+      <Tabs.Screen
         name="profile"
         options={{
           headerRight: () => (
@@ -98,8 +81,7 @@ const _layout = () => {
               </Text>
             </TouchableOpacity>
           ),
-          headerTitle: "",
-          headerStyle: { backgroundColor: theme.colors.background },
+          headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}

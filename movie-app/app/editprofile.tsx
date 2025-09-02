@@ -1,72 +1,122 @@
-import { View, Text, ScrollView, TouchableOpacity, TextInput } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useTheme } from "@/components/ThemeContext";
-import { Avatar } from "react-native-paper";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/AuthContext";
-
+import BottomSheet from "@gorhom/bottom-sheet";
+import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
+import { BACKEND_URL, requestImagePickerPermission } from "@/constants/utils";
+import CustomBottomSheet from "@/components/CustomBottomSheet";
+import UserEditCard from "@/components/UserEditCard";
 const editprofile = () => {
-  const {user} = useAuth()
+  const { user, token, fetchUser } = useAuth();
+
   const [name, setName] = useState("");
+  const [originalName, setOriginalName] = useState("");
+  const [updatingName, setUpdatingName] = useState(false);
+  const [updatingImage, setUpdatingImage] = useState(false);
+  const isNameChanged = name.trim() !== originalName.trim();
+
+  const sheetRef = useRef<BottomSheet>(null);
+  const closeSheet = () => sheetRef.current?.close();
+  const openSheet = () => sheetRef.current?.expand();
 
   useEffect(() => {
     if (user) {
-      setName(`${user.firstname} ${user.lastname}`);
+      const fullname = `${user.firstname} ${user.lastname}`;
+      setName(fullname);
+      setOriginalName(fullname);
     }
-  }, []);
-  const { theme } = useTheme();
-  return (
-    <View
-      style={{ backgroundColor: theme.colors.background }}
-      className="flex-1  px-4   h-full w-full "
-    >
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: 20,
-          gap: 20,
-          paddingBottom: 100,
-        }}
-      >
-        <View className="flex-1 w-full h-full items-center gap-6">
-          <Avatar.Text
-            size={150}
-            label={user?.firstname[0]!}
-            style={{ backgroundColor: "#AB8BFF" }}
-            color="white"
-          />
-          <TouchableOpacity>
-            <Text
-              style={{ color: theme.colors.onSurface }}
-              className="text-center"
-            >
-              Change photo
-            </Text>
-          </TouchableOpacity>
-          <View className=" gap-2 flex-1 w-full">
-            <Text style={{ color: theme.colors.onSurface }} className="ml-2">
-              Name
-            </Text>
-            <TextInput
-              style={{ color: theme.colors.onSurface }}
-              className="border border-primary-200 rounded-lg bg-dark-100 p-4 w-full"
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
-          </View>
-        </View>
+  }, [user]);
 
-        <TouchableOpacity className="bg-accent w-full p-4 rounded-lg">
-          <Text
-            style={{ color: "white", fontWeight: "bold"}}
-            className="text-center"
-          >
-            Save changes
-          </Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+  const saveChanges = async (
+    formData: FormData,
+    options: { name?: boolean; image?: boolean } = {}
+  ) => {
+    try {
+      if (options.name) setUpdatingName(true);
+      if (options.image) setUpdatingImage(true);
+      if (options.image) closeSheet();
+      const res = await axios.post(
+        `${BACKEND_URL}/api/auth/users/update`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        await fetchUser(token!);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      if (options.name) setUpdatingName(false);
+      if (options.image) setUpdatingImage(false);
+    }
+  };
+  const chooseFromLibrary = async () => {
+    await requestImagePickerPermission();
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+    console.log("result", result);
+
+    if (result.canceled) return;
+    const asset = result.assets[0];
+    const formData = new FormData();
+    if (asset.uri) {
+      formData.append("file", {
+        uri: asset.uri,
+        name: asset.fileName || `avatar_${Date.now()}.jpg`,
+        type: asset.mimeType || "image/jpeg",
+      } as any);
+      await saveChanges(formData, { image: true });
+    }
+  };
+
+  const takePhoto = async () => {
+    await requestImagePickerPermission();
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+    if (result.canceled) return;
+    const asset = result.assets[0];
+    const formData = new FormData();
+    if (asset.uri) {
+      formData.append("file", {
+        uri: asset.uri,
+        name: asset.fileName || `avatar_${Date.now()}.jpg`,
+        type: asset.mimeType || "image/jpeg",
+      } as any);
+      await saveChanges(formData, { image: true });
+    }
+  };
+  return (
+    <>
+      <UserEditCard
+        name={name}
+        setName={setName}
+        isNameChanged={isNameChanged}
+        updatingName={updatingName}
+        updatingImage={updatingImage}
+        openSheet={openSheet}
+        saveChanges={saveChanges}
+        user={user}
+      />
+
+      <CustomBottomSheet
+        chooseFromLibrary={chooseFromLibrary}
+        sheetRef={sheetRef}
+        closeSheet={closeSheet}
+        takePhoto={takePhoto}
+      />
+    </>
   );
 };
 

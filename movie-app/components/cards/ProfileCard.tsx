@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Divider, List, Switch } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { registerPushNotifications } from "@/services/notifications";
-import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "../ThemeContext";
 const ProfileCard = ({
@@ -44,12 +43,21 @@ const ProfileCard = ({
   return (
     <View className="flex-1 items-center justify-between gap-6 h-full w-full px-4">
       <View className="flex-1 items-center w-full gap-6">
-        <Avatar.Text
-          size={90}
-          label={user?.firstname[0]}
-          style={{ backgroundColor: "#AB8BFF" }}
-          color="white"
-        />
+        {user.profilePic ? (
+          <Avatar.Image
+            size={90}
+            source={{ uri: user.profilePic }}
+            style={{ backgroundColor: "#AB8BFF" }}
+          />
+        ) : (
+          <Avatar.Text
+            size={90}
+            label={user?.firstname[0]}
+            style={{ backgroundColor: "#AB8BFF" }}
+            color="white"
+          />
+        )}
+
         <Text
           style={{ color: theme.colors.onBackground }}
           className="text-2xl font-bold"

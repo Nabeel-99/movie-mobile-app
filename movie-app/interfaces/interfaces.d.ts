@@ -80,6 +80,7 @@ interface User {
   firstname: string;
   lastname: string;
   email: string;
+  profilePic: string | null;
 }
 interface AuthContextType {
   user: User | null;
@@ -89,5 +90,6 @@ interface AuthContextType {
     password: string
   ) => Promise<{ success: boolean; message?: string }>;
   signOut: () => Promise<void>;
+  fetchUser: (token: string) => Promise<void>;
   loading: boolean;
 }

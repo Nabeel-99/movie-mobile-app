@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  useColorScheme,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { Divider, List, Surface, Switch } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,7 +6,6 @@ import { useTheme } from "@/components/ThemeContext";
 
 const appearance = () => {
   const { toggleTheme, theme, themeMode, lastManualTheme } = useTheme();
-  const systemScheme = useColorScheme();
   return (
     <View
       style={{ backgroundColor: theme.colors.background }}
@@ -38,9 +31,12 @@ const appearance = () => {
         >
           <View className="flex-row items-center  pb-10 gap-24 justify-center">
             <View className="   items-center gap-4">
-              <View className="h-24 px-6 rounded-lg border border-white bg-white"></View>
-              <Text style={{ color: theme.colors.onBackground }}>Light</Text>
-              <TouchableOpacity onPress={() => toggleTheme("light")}>
+              <TouchableOpacity
+                className="gap-4 items-center"
+                onPress={() => toggleTheme("light")}
+              >
+                <View className="h-24 px-6 rounded-lg border border-white bg-white"></View>
+                <Text style={{ color: theme.colors.onBackground }}>Light</Text>
                 <View
                   className={`${(themeMode === "light" || (themeMode === "system" && !theme.dark)) && "bg-blue-500"} items-center justify-center h-5 w-5 rounded-full border border-white`}
                 >
@@ -52,9 +48,13 @@ const appearance = () => {
               </TouchableOpacity>
             </View>
             <View className="  items-center gap-4">
-              <View className="h-24 px-6 rounded-lg border border-dark-100 bg-primary"></View>
-              <Text style={{ color: theme.colors.onBackground }}>Dark</Text>
-              <TouchableOpacity onPress={() => toggleTheme("dark")}>
+              <TouchableOpacity
+                className="gap-4 items-center"
+                onPress={() => toggleTheme("dark")}
+              >
+                <View className="h-24 px-6 rounded-lg border border-dark-100 bg-primary"></View>
+                <Text style={{ color: theme.colors.onBackground }}>Dark</Text>
+
                 <View
                   className={`${(themeMode === "dark" || (themeMode === "system" && theme.dark)) && "bg-blue-500"} items-center justify-center h-5 w-5 rounded-full border border-white`}
                 >

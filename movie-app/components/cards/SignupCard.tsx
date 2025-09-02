@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native";
-
 import { Link, useRouter } from "expo-router";
 import axios from "axios";
 import { BACKEND_URL } from "@/constants/utils";
@@ -11,7 +10,7 @@ import { useTheme } from "@/components/ThemeContext";
 
 const SignupCard = () => {
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme, themeMode } = useTheme();
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
     firstname: "",
@@ -64,10 +63,12 @@ const SignupCard = () => {
   };
 
   return (
-    <View className="bg-primary flex-1 mt-10  gap-6 p-4 px-6 rounded-lg">
+    <View
+      style={{ backgroundColor: theme.colors.background }}
+      className=" flex-1 mt-10  gap-6 p-4 px-6 rounded-lg"
+    >
       <TextInput
-        placeholderTextColor={"white"}
-        style={{ color: theme.colors.onSurface }}
+        placeholderTextColor={`${themeMode === "dark" ? "white" : "black"}`}
         className="border p-4 rounded-lg border-dark-100"
         placeholder="First name"
         value={userData.firstname}
@@ -75,7 +76,7 @@ const SignupCard = () => {
         onChangeText={(text) => setUserData({ ...userData, firstname: text })}
       />
       <TextInput
-        placeholderTextColor={"white"}
+        placeholderTextColor={`${themeMode === "dark" ? "white" : "black"}`}
         style={{ color: theme.colors.onSurface }}
         className="border p-4 rounded-lg border-dark-100"
         placeholder="Last name"
@@ -84,7 +85,7 @@ const SignupCard = () => {
         onChangeText={(text) => setUserData({ ...userData, lastname: text })}
       />
       <TextInput
-        placeholderTextColor={"white"}
+        placeholderTextColor={`${themeMode === "dark" ? "white" : "black"}`}
         style={{ color: theme.colors.onSurface }}
         className="border p-4 rounded-lg border-dark-100"
         placeholder="Email"
@@ -95,7 +96,7 @@ const SignupCard = () => {
         onChangeText={(text) => setUserData({ ...userData, email: text })}
       />
       <TextInput
-        placeholderTextColor={"white"}
+        placeholderTextColor={`${themeMode === "dark" ? "white" : "black"}`}
         style={{ color: theme.colors.onSurface }}
         className="border p-4 rounded-lg border-dark-100"
         placeholder="Password"

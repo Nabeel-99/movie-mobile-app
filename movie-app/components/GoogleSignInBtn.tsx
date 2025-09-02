@@ -14,7 +14,7 @@ type ExpoExtra = {
 
 WebBroswer.maybeCompleteAuthSession();
 const GoogleSignIn = () => {
-  const { theme } = useTheme();
+  const { theme, themeMode } = useTheme();
   const { webGoogleClientId, iosGoogleClientId } = Constants.expoConfig
     ?.extra as ExpoExtra;
 
@@ -32,9 +32,13 @@ const GoogleSignIn = () => {
       <TouchableOpacity
         onPress={() => promptAsync()}
         disabled={!request}
-        className="bg-dark-200 w-full justify-center p-4 rounded-lg flex-row gap-2 items-center"
+        className={` ${themeMode === "dark" ? "bg-dark-100 border border-dark-100" : "bg-white border border-black/10"} w-full justify-center p-4 rounded-lg flex-row gap-2 items-center`}
       >
-        <Ionicons name="logo-google" size={20} color="white" />
+        <Ionicons
+          name="logo-google"
+          size={20}
+          color={`${theme.colors.onSurface}`}
+        />
         <Text style={{ color: theme.colors.onSurface }}>Google</Text>
       </TouchableOpacity>
     </View>
