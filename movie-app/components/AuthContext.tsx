@@ -67,6 +67,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const signInWithGoogle = async (accessToken: string) => {
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/auth/google`, {
+        accessToken,
+      });
+      if (res.status === 201) {
+        saveToken(res.data.token);
+        setToken(res.data.token);
+        setUser(res.data.user);
+        router.push("/profile");
+      }
+      return { success: true };
+    } catch (err: any) {
+      console.log("error", err);
+      return { success: false, message: err.response.data.message };
+    }
+  };
   //   logout
   const signOut = async () => {
     try {
@@ -79,7 +96,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
   return (
     <AuthContext.Provider
-      value={{ user, token, signIn, signOut, loading, fetchUser }}
+      value={{ user, token, signIn, signInWithGoogle, signOut, loading, fetchUser }}
     >
       {children}
     </AuthContext.Provider>

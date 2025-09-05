@@ -71,16 +71,6 @@ const _layout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          headerRight: () => (
-            <TouchableOpacity onPress={() => router.push("/editprofile")}>
-              <Text
-                style={{ color: theme.colors.onSurface }}
-                className="text-xl mr-10"
-              >
-                Edit
-              </Text>
-            </TouchableOpacity>
-          ),
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons

@@ -5,15 +5,16 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "scheme": "movieapp",
+    "scheme": "com.googleusercontent.apps.952889214145-2ll2tmakn8hl86bhpt8iha58n831ktd2",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.movie_app",
+      "bundleIdentifier": "com.anonymous.movieapp",
       "infoPlist": {
-        "UIBackgroundModes": ["remote-notification"],
-        "NSLocalNotificationUsageDescription": "This app will send you reminders for saved movies."
+        "UIBackgroundModes": ["remote-notification", "remote-notification"],
+        "NSLocalNotificationUsageDescription": "This app will send you reminders for saved movies.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -22,11 +23,11 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.movie_app"
+      "package": "com.anonymous.movieapp"
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/logo.png"
     },
     "plugins": [
@@ -44,7 +45,7 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.510652324611-d5j61ggpdu1pifvlndr3s67gpsi42hc1"
+          "iosUrlScheme": "com.googleusercontent.apps.952889214145-2ll2tmakn8hl86bhpt8iha58n831ktd2"
         }
       ]
     ],
@@ -52,8 +53,8 @@
       "typedRoutes": true
     },
     "extra": {
-      "webGoogleClientId": "510652324611-ndigu0rpu4fcjjjlon8gqmc5nj943lji.apps.googleusercontent.com",
-      "iosGoogleClientId": "510652324611-d5j61ggpdu1pifvlndr3s67gpsi42hc1.apps.googleusercontent.com",
+      "webGoogleClientId": "952889214145-qgp6b9i0skrjcnl70l6o4v3isabflbv8.apps.googleusercontent.com",
+      "iosGoogleClientId": "952889214145-2ll2tmakn8hl86bhpt8iha58n831ktd2.apps.googleusercontent.com",
       "router": {},
       "eas": {
         "projectId": "58bb9096-39d0-4142-a11f-7b621631df11"

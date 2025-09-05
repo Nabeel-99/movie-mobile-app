@@ -85,6 +85,9 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null;
+  signInWithGoogle: (
+    accessToken: string
+  ) => Promise<{ success: boolean; message?: string }>;
   signIn: (
     email: string,
     password: string

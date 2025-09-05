@@ -49,7 +49,7 @@ const SignupCard = () => {
         });
         setSnackbarMessage("User created successfully");
         setIsVisible(true);
-        router.push("/signin");
+        router.push("/profile");
       }
     } catch (error: any) {
       console.log("error", error);

@@ -3,15 +3,49 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_SECRET,
 });
-console.log("cloud name", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("secret", process.env.CLOUDINARY_SECRET);
 
+export const googleAuth = async (req, res) => {
+  try {
+    const { accessToken } = req.body;
+
+    if (!accessToken) {
+      return res.status(400).json({ message: "Access token not found" });
+    }
+    const googleRes = await axios.get(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+    const profile = googleRes.data;
+
+    let user = await User.findOne({ email: profile.email });
+    if (!user) {
+      user = await User.create({
+        firstname: profile.name.split(" ")[0],
+        lastname: profile.name.split(" ")[1],
+        profilePic: profile.picture,
+        email: profile.email,
+      });
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+    return res
+      .status(201)
+      .json({ message: "User created successfully", user, token });
+  } catch (error) {
+    console.log("error");
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
 export const createUser = async (req, res) => {
   try {
     const { firstname, lastname, email, password } = req.body;

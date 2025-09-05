@@ -46,7 +46,7 @@ const ProfileCard = ({
         {user.profilePic ? (
           <Avatar.Image
             size={90}
-            source={{ uri: user.profilePic }}
+            source={{ uri: `${user.profilePic}?v=${Date.now()}` }}
             style={{ backgroundColor: "#AB8BFF" }}
           />
         ) : (

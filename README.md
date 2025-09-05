@@ -6,7 +6,7 @@ A modern, feature-rich movie discovery application built with React Native and E
 
 - **🎭 Movie Discovery**: Browse trending and latest movies from TMDB API
 - **🔍 Advanced Search**: Search through 300+ movies with real-time results
-- **👤 User Authentication**: Secure sign-in/sign-up with JWT tokens
+- **👤 User Authentication**: Secure sign-in/sign-up with JWT tokens and Google Sign-In
 - **💾 Save Favorites**: Save and manage your favorite movies
 - **📱 Cross-Platform**: Works on iOS, Android, and Web
 - **🎨 Modern UI**: Beautiful, responsive design with NativeWind styling
@@ -33,17 +33,6 @@ A modern, feature-rich movie discovery application built with React Native and E
 ### APIs & Services
 
 - **TMDB API** - Movie database and information
-- **Appwrite** - Backend-as-a-Service integration
-
-## 📱 Screenshots
-
-The app features a beautiful, modern interface with:
-
-- Home screen with trending and latest movies
-- Search functionality with real-time results
-- User profile and authentication screens
-- Movie detail pages with comprehensive information
-- Saved movies collection
 
 ## 🛠️ Installation
 
@@ -75,9 +64,6 @@ The app features a beautiful, modern interface with:
 
    ```env
    EXPO_PUBLIC_MOVIE_API_KEY=your_tmdb_api_key
-   EXPO_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
-   EXPO_PUBLIC_APPWRITE_DATABASE_ID=your_appwrite_database_id
-   EXPO_PUBLIC_APPWRITE_COLLECTION_ID=your_appwrite_collection_id
    ```
 
 4. **Start the development server**
@@ -118,6 +104,10 @@ The app features a beautiful, modern interface with:
    ```env
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_FOLDER_NAME=your_cloudinary_folder_name
    PORT=5000
    ```
 
@@ -164,7 +154,7 @@ The app integrates with:
 
 - **TMDB API**: For movie data, trending movies, and search
 - **Custom Backend**: For user authentication and data persistence
-- **Appwrite**: For additional backend services
+- **Cloudinary**: For image storage and optimization
 
 ## 🎨 Styling
 
@@ -192,6 +182,7 @@ The app integrates with:
 The app features a complete authentication system:
 
 - User registration and login
+- Google Sign-In integration
 - JWT token-based authentication
 - Secure password handling with bcrypt
 - Protected routes and user sessions
@@ -202,7 +193,6 @@ The app features a complete authentication system:
 - Search through movie database
 - View detailed movie information
 - Save favorite movies
-- Track search history
 
 ## 🤝 Contributing
 

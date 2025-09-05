@@ -4,6 +4,7 @@ import { MD3LightTheme, MD3DarkTheme } from "react-native-paper";
 import Constant from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
+import axios from "axios";
 
 const { expoConfig } = Constant;
 const localIP = (expoConfig?.hostUri || "").split(":").shift() || "localhost";
@@ -112,3 +113,5 @@ export const requestImagePickerPermission = async () => {
     }
   })();
 };
+
+
